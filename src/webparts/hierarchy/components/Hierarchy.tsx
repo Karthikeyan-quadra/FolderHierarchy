@@ -43,8 +43,10 @@ export default function Hierarchy(props: IHierarchyProps) {
         return ["Policy"];
       case "Management":
         return ["Project", "Employee", "Manager"];
-        case "Sales":
+      case "Sales":
         return ["Report"];
+      case "IT":
+        return ["IT"];
       default:
         return [];
     }
@@ -60,7 +62,7 @@ export default function Hierarchy(props: IHierarchyProps) {
           <option value="Admin">Admin</option>
           <option value="Management">Management</option>
           <option value="Sales">Sales</option>
-
+          <option value="IT">IT</option>
         </select>
         <label htmlFor="Folderlists">Choose Folder</label>
         <select id="Folderlists" name="Folderlist" form="listform" onChange={handleFolderChange} value={selectedFolder}>
@@ -73,10 +75,10 @@ export default function Hierarchy(props: IHierarchyProps) {
         </select>
         {/* Add an input element for file selection */}
         <p>
-        <input type="file" onChange={handleFileChange} />
-        <button type="button" onClick={handleUpload}>
-          Upload
-        </button>
+          <input type="file" onChange={handleFileChange} />
+          <button type="button" onClick={handleUpload}>
+            Upload
+          </button>
         </p>
       </form>
     </>
