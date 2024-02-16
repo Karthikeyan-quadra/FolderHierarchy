@@ -74,7 +74,7 @@ export async function FileUpload(file: File, departmentSelection: string, folder
     const sp = addSP();
     const documentLibraryName = "Hierarchy";
     const mainFolderPath = `${documentLibraryName}/${departmentSelection}`;
-    const folderPath = `${mainFolderPath}/${folderSelection}`;
+    const subFolderPath = `${mainFolderPath}/${folderSelection}`;
 
     // Check if the main folder exists
     let mainFolderExists = true;
@@ -100,21 +100,21 @@ export async function FileUpload(file: File, departmentSelection: string, folder
     }
 
     // Check if the subfolder exists
-    let folderExists = true;
+    let subFolderExists = true;
     try {
-      await sp.web.getFolderByServerRelativePath(folderPath).getItem();
+      await sp.web.getFolderByServerRelativePath(subFolderPath).getItem();
     } catch (error) {
-      folderExists = false;
+      subFolderExists = false;
       console.error("Error checking folder existence:", error);
     }
 
-    console.log("Subfolder exists:", folderExists);
+    console.log("Subfolder exists:", subFolderExists);
 
     // If the subfolder doesn't exist, create it
-    if (!folderExists) {
+    if (!subFolderExists) {
       console.log("Creating subfolder...");
       try {
-        await sp.web.folders.addUsingPath(folderPath);
+        await sp.web.folders.addUsingPath(subFolderPath);
         console.log("Subfolder created.");
       } catch (error) {
         console.error("Error creating subfolder:", error);
@@ -123,7 +123,7 @@ export async function FileUpload(file: File, departmentSelection: string, folder
     }
 
     // Upload the file
-    const result = await sp.web.getFolderByServerRelativePath(folderPath).files.addUsingPath(file.name, file, { Overwrite: true });
+    const result = await sp.web.getFolderByServerRelativePath(subFolderPath).files.addUsingPath(file.name, file, { Overwrite: true });
     console.log(`Result of file upload: ${JSON.stringify(result)}`);
   } catch (error) {
     console.error("Error during file upload:", error);
